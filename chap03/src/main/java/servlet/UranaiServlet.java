@@ -18,8 +18,8 @@ public class UranaiServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] luckArray = {"超スッキリ", "スッキリ", "最悪"};
 		int index = (int) Math.random() * 3;
-		// String luck = luckArray[index];
-		String luck = null;
+		String luck = luckArray[index];
+		
 		
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
