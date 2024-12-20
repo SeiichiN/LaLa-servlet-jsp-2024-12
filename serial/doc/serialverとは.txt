@@ -1,0 +1,54 @@
+
+-----------------------------------------------
+package test;
+
+import beans.Hero;
+
+public class Main {
+	public static void main(String[] args) {
+		Hero h = new Hero("ミナト");
+		System.out.println(h);
+  }
+}
+-----------------------------------------------
+
+beans.Hero@279f2327
+
+
+-----------------------------------------------
+package beans;
+
+import java.io.Serializable;
+
+public class Hero implements Serializable {
+	private String name;
+	public Hero(String name) {
+		this.name = name;
+	}
+}
+-----------------------------------------------
+
+> serialver beans.Hero
+beans.Hero:    private static final long serialVersionUID = 1747193265810085433L;
+
+
+
+-----------------------------------------------
+package beans;
+
+import java.io.Serializable;
+
+public class Hero implements Serializable {
+	private String name;
+	public Hero(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return name;
+	}
+
+}
+-----------------------------------------------
+
+> serialver beans.Hero
+beans.Hero:    private static final long serialVersionUID = 5648111667547000782L;
