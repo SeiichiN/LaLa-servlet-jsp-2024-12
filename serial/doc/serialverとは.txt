@@ -1,0 +1,72 @@
+
+-----------------------------------------------
+package test;
+
+import beans.Hero;
+
+public class Main {
+	public static void main(String[] args) {
+		Hero h = new Hero("ミナト");
+		System.out.println(h);
+  }
+}
+-----------------------------------------------
+
+このmain()メソッドを実行すると、以下のように表示される。
+
+beans.Hero@15db9742
+
+Heroクラスを (1) -> (2) と変更しても、同じである。
+
+beans.Hero@15db9742
+
+しかし、serialver コマンドでは、Heroクラスが (1) と (2) では
+大きく違う。
+
+
+Heroクラス(1)
+-----------------------------------------------
+package beans;
+
+import java.io.Serializable;
+
+public class Hero implements Serializable {
+	private String name;
+	public Hero(String name) {
+		this.name = name;
+	}
+}
+-----------------------------------------------
+
+> serialver beans.Hero
+beans.Hero:    private static final long serialVersionUID = 1747193265810085433L;
+
+
+Heroクラス(2)
+-----------------------------------------------
+package beans;
+
+import java.io.Serializable;
+
+public class Hero implements Serializable {
+	private String name;
+	private int age;
+	
+	public Hero(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return name;
+	}
+
+}
+-----------------------------------------------
+
+> serialver beans.Hero
+beans.Hero:    private static final long serialVersionUID = 5648111667547000782L;
+
+
+参考URL
+
+java.io.SerializableのSerializable（直列化可能）とは何なのか？
+http://blog.livedoor.jp/mochikoastech/archives/01135.html
