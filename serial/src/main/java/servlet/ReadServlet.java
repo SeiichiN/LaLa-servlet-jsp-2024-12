@@ -18,8 +18,8 @@ public class ReadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Hero hero = (Hero) SerializableRW.readObj("hero.obj");
-		Matango m = (Matango) SerializableRW.readObj("matango.obj");
+		Hero hero = (Hero) SerializableRW.readObj("hero.ser");
+		Matango m = (Matango) SerializableRW.readObj("matango.ser");
 		List<String> msgList_a = hero.attack(m);
 		List<String> msgList_b = m.attack(hero);
 		request.setAttribute("msgList_a", msgList_a);

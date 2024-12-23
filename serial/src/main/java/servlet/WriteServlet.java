@@ -17,12 +17,12 @@ public class WriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Hero hero = new Hero("アサカ");
-		SerializableRW.saveObj("hero.obj", hero);
+		Hero hero = new Hero("タロウ");
+		SerializableRW.saveObj("hero.ser", hero);
 		
-		Matango m = new Matango('B');
+		Matango m = new Matango('C');
 		m.setHp(50);
-		SerializableRW.saveObj("matango.obj", m);
+		SerializableRW.saveObj("matango.ser", m);
 	}
 
 }

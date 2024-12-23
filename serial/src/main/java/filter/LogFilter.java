@@ -20,12 +20,10 @@ public class LogFilter extends HttpFilter {
 
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		ServletContext application=request.getServletContext();
-		//実行日時のjava.util.Dateインスタンス作成
-		Date current=new Date();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-		//日付入のpathを作成
-		String path = "/WEB-INF/log/" + sdf.format(current).toString()+".log";
+		ServletContext application = request.getServletContext();
+		Date current = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String path = "/WEB-INF/log/" + sdf.format(current) + ".log";
 		//いつもの３段ラッピングを行うがgetRealPathを使って実行環境のパスを渡していることに注意)
 		//第２引数はappend->true(追記モード)
 		FileOutputStream fos = new FileOutputStream(application.getRealPath(path),true);
@@ -34,11 +32,10 @@ public class LogFilter extends HttpFilter {
 
 		OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
 		BufferedWriter bw = new BufferedWriter(osw);
-		sdf=new SimpleDateFormat("HH:mm:ss");
-		bw.write(sdf.format(current).toString());
+		sdf = new SimpleDateFormat("HH:mm:ss");
+		bw.write(sdf.format(current));
 		//win環境では"¥t"
 		bw.write("\t");
-		//getServletPath()を行うためにダウンキャストを行う
 		bw.write(((HttpServletRequest)request).getServletPath());
 		bw.write("\t");
 		bw.write(((HttpServletRequest)request).getHeader("user-agent"));
