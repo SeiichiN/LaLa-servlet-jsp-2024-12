@@ -25,15 +25,15 @@ public class LogFilter extends HttpFilter {
 		Date current=new Date();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
 		//日付入のpathを作成
-		String path="/WEB-INF/log/"+sdf.format(current).toString()+".log";
+		String path = "/WEB-INF/log/" + sdf.format(current).toString()+".log";
 		//いつもの３段ラッピングを行うがgetRealPathを使って実行環境のパスを渡していることに注意)
 		//第２引数はappend->true(追記モード)
-		FileOutputStream fos=new FileOutputStream(application.getRealPath(path),true);
+		FileOutputStream fos = new FileOutputStream(application.getRealPath(path),true);
 		//コンソールにリアルパスを出力しておく
 		System.out.println(application.getRealPath(path));
 
-		OutputStreamWriter osw=new OutputStreamWriter(fos,"utf-8");
-		BufferedWriter bw=new BufferedWriter(osw);
+		OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
+		BufferedWriter bw = new BufferedWriter(osw);
 		sdf=new SimpleDateFormat("HH:mm:ss");
 		bw.write(sdf.format(current).toString());
 		//win環境では"¥t"
