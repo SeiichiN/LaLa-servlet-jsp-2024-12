@@ -11,6 +11,7 @@
 		<button type="submit" name="hand" value="0">グー</button>
 		<button type="submit" name="hand" value="1">チョキ</button>
 		<button type="submit" name="hand" value="2">パー</button>
+		<button type="submit" name="hand" value="3">ピー</button>
 	</form>
 </body>
 </html>
