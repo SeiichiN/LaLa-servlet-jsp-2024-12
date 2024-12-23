@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="beans.Hero,beans.Matango,main.SerializableRW" %>
 <%@ page import="java.util.List" %>
 <%
-Hero hero = (Hero) SerializableRW.readObj("hero.obj");
-Matango m = (Matango) SerializableRW.readObj("matango.obj");
-List<String> msgList_a = hero.attack(m);
-List<String> msgList_b = m.attack(hero);
+List<String> msgList_a = (List<String>)request.getAttribute("msgList_a");
+List<String> msgList_b = (List<String>)request.getAttribute("msgList_b");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,6 +12,21 @@ List<String> msgList_b = m.attack(hero);
 <title>Insert title here</title>
 </head>
 <body>
-
+<%
+if (msgList_a != null){
+	for (String s : msgList_a) { %>
+		<p><%= s %></p>
+<%
+	}
+}
+%>
+<%
+if (msgList_b != null){
+	for (String s : msgList_b) { %>
+		<p><%= s %></p>
+<%
+	}
+}
+%>
 </body>
 </html>

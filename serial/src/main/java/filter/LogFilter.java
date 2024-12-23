@@ -1,4 +1,11 @@
-package listener;
+package filter;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletContext;
@@ -7,13 +14,6 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @WebFilter("/*")
 public class LogFilter extends HttpFilter {
@@ -25,7 +25,7 @@ public class LogFilter extends HttpFilter {
 		Date current=new Date();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
 		//日付入のpathを作成
-		String path="/WEB-INF/data/"+sdf.format(current).toString()+".log";
+		String path="/WEB-INF/log/"+sdf.format(current).toString()+".log";
 		//いつもの３段ラッピングを行うがgetRealPathを使って実行環境のパスを渡していることに注意)
 		//第２引数はappend->true(追記モード)
 		FileOutputStream fos=new FileOutputStream(application.getRealPath(path),true);
