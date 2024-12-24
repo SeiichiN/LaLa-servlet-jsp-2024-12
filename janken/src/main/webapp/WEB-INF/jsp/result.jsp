@@ -14,6 +14,6 @@ String result2 = (String) request.getAttribute("result2");
 	<h1>じゃんけん結果</h1>
 	<p><%= result2 %></p>
 	<p><%= result %></p>
-	<p><a href="index.jsp">もう一度</a></p>
+	<p><a href="poi">もう一度</a></p>
 </body>
 </html>
