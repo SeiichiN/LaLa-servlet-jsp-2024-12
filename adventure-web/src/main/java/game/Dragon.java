@@ -11,7 +11,10 @@ public class Dragon extends Monster {
 	@Override
 	public List<String> attack(Player p) {
 		List<String> msgList = new ArrayList<>();
-		if (this.getHp() <= 0) { return null; }
+		if (this.getHp() <= 0) {
+			Game.map[this.getY()][this.getX()] = ".";
+			return null; 
+		}
 		msgList.add(this.getType() + "は口から火を噴いた。");
 		int ap = (int)Math.floor(Math.random() * 31);
 		p.setHp(p.getHp() - ap);

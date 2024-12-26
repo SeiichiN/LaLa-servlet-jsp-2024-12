@@ -27,9 +27,14 @@ public class ButtleServlet extends HttpServlet {
 		List<String> msgList = new ArrayList<>();
 		if (select.equals("fight")) {
 			Monster monsterObj = (Monster) session.getAttribute(monster);
-			msgList.addAll(player.attack(monsterObj));
-			msgList.addAll(monsterObj.attack(player));
-			request.setAttribute("monster", monster);
+			List<String>  pList = player.attack(monsterObj);
+			if (pList != null) { msgList.addAll(pList); }
+			List<String> mList = monsterObj.attack(player);
+			if (mList != null) { msgList.addAll(mList); }
+			if (monsterObj.getHp() > 0 && player.getHp() > 0) {
+				request.setAttribute("monster", monster);
+				msgList.add(player.getName() + ":" + player.getHp() + " " + monsterObj.getType() + ":" + monsterObj.getHp());
+			}
 		} else if (select.equals("run")) {
 			msgList.addAll(player.run());
 		}
