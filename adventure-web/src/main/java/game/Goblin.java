@@ -1,19 +1,24 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Goblin extends Monster {
 	public Goblin(String type) {
 		super(type);
 	}
 
 	@Override
-	public void attack(Player p) {
-		if (this.getHp() <= 0) { return; }		
-		System.out.println(this.getType() + "は斧で切りつけた。");
+	public List<String> attack(Player p) {
+		List<String> msgList = new ArrayList<>();
+		if (this.getHp() <= 0) { return null; }		
+		msgList.add(this.getType() + "は斧で切りつけた。");
 		int ap = (int)Math.floor(Math.random() * 11);
 		p.setHp(p.getHp() - ap);
-		System.out.println(p.getName() + "に" + ap + "ポイントのダメージ");
+		msgList.add(p.getName() + "に" + ap + "ポイントのダメージ");
 		if (p.getHp() <= 0) {
-			System.out.println(p.getName() + "を倒した。");
+			msgList.add(p.getName() + "を倒した。");
 		}
+		return msgList;
 	}
 }

@@ -1,5 +1,7 @@
 package game;
 
+import java.util.List;
+
 public abstract class Monster extends GameLocation 
                               implements SetSelfOnMap {
 	private String type;
@@ -15,7 +17,7 @@ public abstract class Monster extends GameLocation
 		Game.map[this.getY()][this.getX()] = this.type;
 	}
 	
-	public abstract void attack(Player p);
+	public abstract List<String> attack(Player p);
 	
 	public String getType() {
 		return this.type;

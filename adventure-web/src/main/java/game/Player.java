@@ -40,15 +40,23 @@ public class Player extends GameLocation {
 		
 	}
 	
-	public void attack(Monster m) {
-		if (this.hp <= 0) { return; }
-		System.out.println(this.getName() + "は剣で切りつけた。");
+	public List<String> attack(Monster m) {
+		List<String> msgList = new ArrayList<>();
+		if (this.hp <= 0) { return null; }
+		msgList.add(this.getName() + "は剣で切りつけた。");
 		int ap = (int)Math.floor(Math.random() * 31);
 		m.setHp(m.getHp() - ap);
-		System.out.println(m.getType() + "に" + ap + "ポイントのダメージ");
+		msgList.add(m.getType() + "に" + ap + "ポイントのダメージ");
 		if (m.getHp() <= 0) {
-			System.out.println(m.getType() + "を倒した。");
-		}		
+			msgList.add(m.getType() + "を倒した。");
+		}
+		return msgList;
+	}
+	
+	public List<String> run() {
+		List<String> msgList = new ArrayList<>();
+		msgList.add(this.getName() + "は、逃げ出した！");
+		return msgList;
 	}
 	
 	public void look() {
