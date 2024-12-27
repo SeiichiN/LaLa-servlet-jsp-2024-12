@@ -24,5 +24,11 @@
 			<button type="submit" name="select" value="take">拾う</button>
 		</form>
 	</c:if>
+	<c:if test="${player.hp <= 0}">
+		<div class="gameover">GAME OVER</div>
+		<form action="game" method="post">
+			<button type="submit" name="replay" value="yes">再挑戦する</button>
+		</form>
+	</c:if>
 </div>
     
