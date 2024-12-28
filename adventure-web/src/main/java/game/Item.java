@@ -16,4 +16,9 @@ public abstract class Item extends GameLocation
 	public String getType() {
 		return type;
 	}
+
+	@Override
+	public String toString() {
+		return type;
+	}
 }

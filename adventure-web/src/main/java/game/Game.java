@@ -13,6 +13,16 @@ public class Game {
 			{".", ".", ".", ".", "."}
 	}; 
 	
+	public static void initMap() {
+		map = new String[][]{
+				{".", ".", ".", ".", "."},
+				{".", ".", ".", ".", "."},
+				{".", ".", "#", "#", "."},
+				{".", ".", ".", ".", "."},
+				{".", ".", ".", ".", "."}
+		};		
+	}
+	
 	public static void opening() {
 		// p.68 テキストブロック
 		String str = 

@@ -7,6 +7,12 @@
 	justify-content: space-between;
 }
 
+.map,
+.info,
+.handle {
+	flex: 1 1 30%;
+}
+
 header {
 	padding: 10px 0;
 	margin-bottom: 20px;
@@ -49,9 +55,26 @@ footer {
 /*
  * handle.jsp
  */
+.movebtn-area {
+	width: 80px;
+	margin: 0 auto;
+}
 .up-btn {
 	text-align: center;
 }
+.lr-btn {
+	display: flex;
+	justify-content: space-between;
+}
 .down-btn {
 	text-align: center;
+}
+.player-inventory ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	display: flex;
+}
+.player-inventory li {
+	margin-left: 10px;
 }

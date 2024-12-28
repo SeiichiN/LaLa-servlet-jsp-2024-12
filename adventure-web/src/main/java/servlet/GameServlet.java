@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 import game.Dragon;
 import game.Ether;
+import game.Game;
 import game.Goblin;
 import game.Player;
 import game.Potion;
@@ -60,6 +61,7 @@ public class GameServlet extends HttpServlet {
 				session.removeAttribute("dragon");
 				session.removeAttribute("potion");
 				session.removeAttribute("ether");
+				Game.initMap();
 			}			
 		}
 		doGet(request, response);

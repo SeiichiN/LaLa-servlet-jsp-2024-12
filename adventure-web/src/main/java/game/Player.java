@@ -16,18 +16,44 @@ public class Player extends GameLocation {
 	}
 	
 	public void take(Item item) {
-		System.out.print("取りますか？ (y/n) > ");
-		Scanner scan = new Scanner(System.in);
-		String s = scan.nextLine().toLowerCase();
-		if (s.equals("y")) {
-			itemList.add(item);
-			Game.map[item.getY()][item.getX()] = ".";
-		}
+		itemList.add(item);
+		Game.map[item.getY()][item.getX()] = ".";
 	}
 	
-	public void use(Potion p) {
+	public List<Item> getItemList() {
+		return itemList;
+	}
+
+	public List<String> use(String itemType) {
+		List<String> msgList = new ArrayList<>();
+		Item item = null;
+		for (Item i : itemList) {
+			if (i.getType().equals(itemType)) {
+				item = i;
+			}
+		}
+		if (item instanceof Potion p) {
+			msgList = use(p);
+		} else if (item instanceof Ether e) {
+			msgList = use(e);
+		}
+		itemList.remove(item);
+		return msgList;
+	}
+	
+	public List<String> use(Ether e) {
+		List<String> msgList = new ArrayList<>();
+		msgList.add("エーテルを使ったが、" + this.getName() + 
+				"は魔法が使えないので、効果はなかった。");
+		return msgList;
+	}
+	
+	public List<String> use(Potion p) {
+		List<String> msgList = new ArrayList<>();
 		this.setHp(p.getRp());
-		System.out.println(this.getName() + "のHPが" + this.getHp() + "に回復した");
+		msgList.add(this.getName() + "はポーションを使った！");
+		msgList.add(this.getName() + "のHPが" + this.getHp() + "に回復した");
+		return msgList;
 	}
 	
 	public void printItemList() {
