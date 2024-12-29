@@ -34,4 +34,8 @@ public class Game {
 		};
 		return jaword;
 	}
+	
+	public static void opening() {
+		System.out.println("<<< START >>>");
+	}
 }

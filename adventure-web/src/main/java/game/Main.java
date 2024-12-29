@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		// Game.opening();
-		Goblin g = new Goblin("goblin");
-		Dragon d = new Dragon("dragon");
+	   // Game.opening();
+		GoblinAttackStrategy goblinStrategy = new GoblinAttackStrategy();
+		Goblin g = new Goblin("goblin", goblinStrategy);
+		DragonAttackStrategy dragonStrategy = new DragonAttackStrategy();
+		Dragon d = new Dragon("dragon", dragonStrategy);
 		Potion po = new Potion("potion");
 		Ether e = new Ether("ether");
 		Player p = new Player("太郎");
