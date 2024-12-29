@@ -20,7 +20,6 @@ public class ButtleServlet extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String monster = request.getParameter("monster");
-		System.out.println(monster);
 		String select = request.getParameter("select");
 		HttpSession session = request.getSession();
 		Player player = (Player) session.getAttribute("player");
@@ -33,7 +32,7 @@ public class ButtleServlet extends HttpServlet {
 			if (mList != null) { msgList.addAll(mList); }
 			if (monsterObj.getHp() > 0 && player.getHp() > 0) {
 				request.setAttribute("monster", monster);
-				msgList.add(player.getName() + ":" + player.getHp() + " " + monsterObj.getType() + ":" + monsterObj.getHp());
+				msgList.add(player.getName() + ":" + player.getHp() + " " + monsterObj.getJaType() + ":" + monsterObj.getHp());
 			}
 		} else if (select.equals("run")) {
 			msgList.addAll(player.run());

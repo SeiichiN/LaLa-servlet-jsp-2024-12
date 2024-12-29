@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <div class="handle">
 	<section class="move-btn">
 		<h2>MOVE</h2>
@@ -26,18 +27,20 @@
 		</div>
 		<div class="player-inventory">
 			持ち物：
-			<form action="UseItemServlet" method="post">
-				<ul>
-				<c:forEach var="item" items="${player.itemList}">
-					<li>
-						<label>
-							<input type="radio" name="item" value="${item.type}">${item.type}
-						</label>
-					</li>
-				</c:forEach>
-				</ul>
-				<input type="submit" value="使う">
-			</form>
+			<c:if test="${fn:length(player.itemList) > 0}">
+				<form action="UseItemServlet" method="post">
+					<ul>
+					<c:forEach var="item" items="${player.itemList}">
+						<li>
+							<label>
+								<input type="radio" name="item" value="${item.type}">${item.jaType}
+							</label>
+						</li>
+					</c:forEach>
+					</ul>
+					<input type="submit" value="使う">
+				</form>
+			</c:if>
 		</div>
 	</section>
 </div>

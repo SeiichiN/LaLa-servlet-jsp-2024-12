@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <div class="info">
 	<h2>INFO</h2>
-	<p><c:out value="${msg}"/></p>
+<%-- 	<p><c:out value="${msg}"/></p> --%>
 	<c:if test="${not empty msgList}">
 		<p>
 		<c:forEach var="message" items="${msgList}">

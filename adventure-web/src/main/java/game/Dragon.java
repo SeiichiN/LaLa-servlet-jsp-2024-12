@@ -15,7 +15,7 @@ public class Dragon extends Monster {
 			Game.map[this.getY()][this.getX()] = ".";
 			return null; 
 		}
-		msgList.add(this.getType() + "は口から火を噴いた。");
+		msgList.add(this.getJaType() + "は口から火を噴いた。");
 		int ap = (int)Math.floor(Math.random() * 31);
 		p.setHp(p.getHp() - ap);
 		msgList.add(p.getName() + "に" + ap + "ポイントのダメージ");

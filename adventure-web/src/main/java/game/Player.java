@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public class Player extends GameLocation {
 	private String name;
 	private int hp;
@@ -72,9 +74,9 @@ public class Player extends GameLocation {
 		msgList.add(this.getName() + "は剣で切りつけた。");
 		int ap = (int)Math.floor(Math.random() * 31);
 		m.setHp(m.getHp() - ap);
-		msgList.add(m.getType() + "に" + ap + "ポイントのダメージ");
+		msgList.add(m.getJaType() + "に" + ap + "ポイントのダメージ");
 		if (m.getHp() <= 0) {
-			msgList.add(m.getType() + "を倒した。");
+			msgList.add(m.getJaType() + "を倒した。");
 		}
 		return msgList;
 	}
@@ -85,11 +87,29 @@ public class Player extends GameLocation {
 		return msgList;
 	}
 	
-	public void look() {
-		System.out.print("[" + getY() + ":" + getX() + "] ");
-		System.out.println(Game.map[getY()][getX()]);
+	private String getThisPlace() {
+		return Game.map[this.getY()][this.getX()];
 	}
 	
+	public String look(HttpServletRequest request) {
+		String thing = getThisPlace();
+		String msg = null;
+		switch (thing) {
+			case "goblin", "dragon" -> {
+				request.setAttribute("monster", thing);
+				msg = Game.getJa(thing) + "が現れた！";
+			}
+			case "potion", "ether" -> {
+				request.setAttribute("item", thing);
+				msg = Game.getJa(thing) + "があった！";
+			}
+			case "." -> {
+				msg = "何も見当たらない";
+			}
+		}
+		return msg;
+	}
+		
 	public String toString() {
 		return name + " HP:" + hp;
 	}
@@ -104,13 +124,21 @@ public class Player extends GameLocation {
 		this.hp = hp;
 	}
 	
-	public void move(String dir) {
+	public String move(String dir) {
+		int _y = this.getY();
+		int _x = this.getX();
 		switch (dir) {
 		case "a" -> { moveLeft(); }
 		case "d" -> { moveRight(); }
 		case "w" -> { moveUp(); }
 		case "s" -> { moveDown(); }
 		}
+		if (this.getThisPlace().equals("#")) {
+			this.setY(_y);
+			this.setX(_x);
+			return "そこには行けません";
+		}
+		return null;
 	}
 	private void moveLeft() {
 		this.setX(this.getX() - 1);

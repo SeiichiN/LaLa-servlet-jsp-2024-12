@@ -3,9 +3,11 @@ package game;
 public abstract class Item extends GameLocation
                            implements SetSelfOnMap {
 	private String type;
+	private String jaType;
 	
 	public Item (String type) {
 		this.type = type;
+		this.jaType = Game.getJa(type);
 		setLocation();
 		setSelfOnMap();
 	}
@@ -15,6 +17,10 @@ public abstract class Item extends GameLocation
 	}	
 	public String getType() {
 		return type;
+	}
+
+	public String getJaType() {
+		return jaType;
 	}
 
 	@Override

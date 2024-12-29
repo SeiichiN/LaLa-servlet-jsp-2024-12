@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import game.Game;
 import game.Player;
@@ -24,24 +26,13 @@ public class MoveServlet extends HttpServlet {
 			response.sendRedirect("game");
 			return;
 		}
-		player.move(dir);
-		
-		String thing = Game.map[player.getY()][player.getX()];
-		String msg = null;
-		switch (thing) {
-			case "goblin", "dragon" -> {
-				request.setAttribute("monster", thing);
-				msg = thing + "が現れた！";
-			}
-			case "potion", "ether" -> {
-				request.setAttribute("item", thing);
-				msg = thing + "があった！";
-			}
-			default -> {
-				msg = "何も見当たらない";
-			}
+		List<String> msgList = new ArrayList<>();
+		String msg = player.move(dir);
+		if (msg != null && msg.length() != 0) {
+			msgList.add(msg);
 		}
-		request.setAttribute("msg", msg);
+		msgList.add(player.look(request));
+		request.setAttribute("msgList", msgList);
 		String url = "WEB-INF/jsp/main.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
 	}

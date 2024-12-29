@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -47,6 +49,9 @@ public class GameServlet extends HttpServlet {
 			player = new Player("太郎");
 			session.setAttribute("player", player);
 		}
+		List<String> msgList = new ArrayList<>();
+		msgList.add(player.look(request));
+		request.setAttribute("msgList", msgList);
 		String url = "WEB-INF/jsp/main.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
 	}

@@ -20,22 +20,23 @@ public class GetItemServlet extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String select = request.getParameter("select");
-		if (select.equals("take")) {
-			String itemType = request.getParameter("item");
-			HttpSession session = request.getSession();
-			Player player = (Player) session.getAttribute("player");
-			Item item = null;
-			switch (itemType) {
-				case "potion" -> {
-					item = (Potion) session.getAttribute("potion");
-					session.removeAttribute("potion");
+		if (select != null && select.length() != 0) {
+			if (select.equals("take")) {
+				String itemType = request.getParameter("item");
+				HttpSession session = request.getSession();
+				Player player = (Player) session.getAttribute("player");
+				Item item = null;
+				switch (itemType) {
+					case "potion" -> {
+						item = (Potion) session.getAttribute("potion");
+					}
+					case "ether" -> {
+						item = (Ether) session.getAttribute("ether");
+					}
 				}
-				case "ether" -> {
-					item = (Ether) session.getAttribute("ether");
-					session.removeAttribute("ether");
-				}
+				player.take(item);
+				session.removeAttribute(itemType);
 			}
-			player.take(item);
 		}
 		String url = "WEB-INF/jsp/main.jsp";
 		request.getRequestDispatcher(url).forward(request, response);

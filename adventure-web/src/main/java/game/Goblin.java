@@ -15,7 +15,7 @@ public class Goblin extends Monster {
 			Game.map[this.getY()][this.getX()] = ".";
 			return null; 
 		}		
-		msgList.add(this.getType() + "は斧で切りつけた。");
+		msgList.add(this.getJaType() + "は斧で切りつけた。");
 		int ap = (int)Math.floor(Math.random() * 11);
 		p.setHp(p.getHp() - ap);
 		msgList.add(p.getName() + "に" + ap + "ポイントのダメージ");
