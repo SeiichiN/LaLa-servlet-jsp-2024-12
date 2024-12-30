@@ -12,9 +12,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import game.Dragon;
+import game.DragonAttackStrategy;
 import game.Ether;
 import game.Game;
 import game.Goblin;
+import game.GoblinAttackStrategy;
 import game.Player;
 import game.Potion;
 
@@ -26,12 +28,14 @@ public class GameServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Goblin goblin = (Goblin) session.getAttribute("goblin");
 		if (goblin == null) {
-			goblin = new Goblin("goblin");
+			GoblinAttackStrategy goblinStrategy = new GoblinAttackStrategy();
+			goblin = new Goblin("goblin", goblinStrategy);
 			session.setAttribute("goblin", goblin);
 		}
 		Dragon dragon = (Dragon) session.getAttribute("dragon");
 		if (dragon == null) {
-			dragon = new Dragon("dragon");
+			DragonAttackStrategy dragonStrategy = new DragonAttackStrategy();
+			dragon = new Dragon("dragon", dragonStrategy);
 			session.setAttribute("dragon", dragon);
 		}
 		Potion potion = (Potion) session.getAttribute("potion");
