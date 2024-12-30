@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import model.Mutter;
+import model.PostMutterLogic;
 import model.User;
 
 @WebServlet("/Main")
@@ -48,8 +49,12 @@ public class Main extends HttpServlet {
 			HttpSession session = request.getSession();
 			User loginUser = (User) session.getAttribute("loginUser");
 			Mutter mutter = new Mutter(loginUser.getName(), text);
-			mutterList.add(0, mutter);
-			application.setAttribute("mutterList", mutterList);
+			PostMutterLogic postMutterLogic = new PostMutterLogic();
+			postMutterLogic.execute(mutter, mutterList);
+			// application.setAttribute("mutterList", mutterList);
+		} else {
+			String errorMsg = "つぶやきが入力されていません";
+			request.setAttribute("errorMsg", errorMsg);
 		}
 		String url = "WEB-INF/jsp/main.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
