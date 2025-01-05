@@ -46,3 +46,9 @@ footer {
 	display: flex;
 	
 }
+
+.map,
+.info,
+.handle {
+	flex: 1 1 33%;
+}

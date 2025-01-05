@@ -4,5 +4,7 @@
 <%
 Player player = (Player) session.getAttribute("player");
 %>
-<h2>MAP</h2>
-<p>現在:[<%= player.getY() %>, <%= player.getX() %>]</p>
+<div class="map">
+	<h2>MAP</h2>
+	<p>現在:[<%= player.getY() %>, <%= player.getX() %>]</p>
+</div>
