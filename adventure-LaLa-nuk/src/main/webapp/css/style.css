@@ -32,6 +32,10 @@ h1 {
 	margin: 0;
 }
 
+h2 {
+	margin-botton: 10px;
+}
+
 footer {
 	position: fixed;
 	bottom: 0;
@@ -51,4 +55,27 @@ footer {
 .info,
 .handle {
 	flex: 1 1 33%;
+}
+
+/*
+ * handle.jsp
+ */
+.button-area {
+	width: 70px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.up-btn {
+	text-align: center;
+}
+
+.lr-btn {
+	display: flex;
+	justify-content: space-between;
+}
+
+.down-btn {
+	text-align: center;
 }
