@@ -22,7 +22,9 @@ public class MoveServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Player player = (Player)session.getAttribute("player");
 		player.move(dir);
-		String msg = player.look();
+		String thing = player.look();
+		request.setAttribute("thing", thing);
+		String msg = getMeetMessage(thing);
 		List<String> msgList = new ArrayList<>();
 		msgList.add(msg);
 		request.setAttribute("msgList", msgList);
@@ -30,4 +32,14 @@ public class MoveServlet extends HttpServlet {
 		request.getRequestDispatcher(url).forward(request, response);
 	}
 
+	private String getMeetMessage(String thing) {
+		String msg = switch (thing) {
+		case "goblin" -> "ゴブリンが現れた！";
+		case "dragon" -> "ドラゴンが現れた！";
+		case "potion" -> "ポーションがある！";
+		case "ether" -> "エーテルがある！";
+		default -> "何もありません";
+		};
+		return msg;
+	}
 }
