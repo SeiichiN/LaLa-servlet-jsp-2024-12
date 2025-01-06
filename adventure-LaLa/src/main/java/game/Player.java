@@ -51,9 +51,13 @@ public class Player extends GameLocation {
 		}		
 	}
 	
-	public void look() {
-		System.out.print("[" + getY() + ":" + getX() + "] ");
-		System.out.println(Game.map[getY()][getX()]);
+	public String look() {
+		String thing = Game.map[getY()][getX()];
+		if (thing.equals(".")) {
+			return "何もありません";
+		} else {
+			return thing;
+		}
 	}
 	
 	public String toString() {

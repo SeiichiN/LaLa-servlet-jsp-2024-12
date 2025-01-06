@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="model.User" %>
-<%@ page import="model.Mutter, java.util.List" %>
-<%
-User loginUser = (User) session.getAttribute("loginUser");
-@SuppressWarnings("unchecked")
-List<Mutter> mutterList = (List<Mutter>) application.getAttribute("mutterList");
-String errorMsg = (String) request.getAttribute("errorMsg");
-%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +10,7 @@ String errorMsg = (String) request.getAttribute("errorMsg");
 <body>
 	<h1>どこつぶメイン</h1>
 
-	<p><%= loginUser.getName() %>さん、ログイン中
+	<p> <c:out value="${loginUser.name}"/> さん、ログイン中
 	<a href="Logout">ログアウト</a>
 	</p>
 	
@@ -27,12 +20,13 @@ String errorMsg = (String) request.getAttribute("errorMsg");
 		<input type="submit" value="つぶやく">
 	</form>
 	
-	<% if (errorMsg != null) { %>
-		<p style="color:red"><%= errorMsg %></p>
-	<% } %>
+	<c:if test="${not empty errorMsg}">
+		<p style="color:red"><c:out value="${errorMsg}"/></p>
+	</c:if>
 
-  <% for (Mutter m : mutterList) { %>
-  	<p><%= m.getUserName() %> : <%= m.getText() %></p>
-  <% } %>
+	<c:forEach var="m" items="${mutterList}">
+		<p><c:out value="${m.userName}"/> : <c:out value="${m.text}"/></p>
+	</c:forEach>
+
 </body>
 </html>
