@@ -50,7 +50,11 @@ replay_pid*
 !jstl-impl-1.2.jar
 !jakarta.servlet.jsp.jstl-3.0.1.jar
 !jakarta.servlet.jsp.jstl-api-3.0.0.jar
+<<<<<<< HEAD
 !log4j-*.jar
+=======
+!h2-*.jar
+>>>>>>> main
 
 jstl_sample/
 sample/

@@ -22,12 +22,25 @@ public class MoveServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Player player = (Player)session.getAttribute("player");
 		player.move(dir);
-		String msg = player.look();
+		String thing = player.look();
+		String msg = getMessage(thing);
 		List<String> msgList = new ArrayList<>();
 		msgList.add(msg);
+		request.setAttribute("thing", thing);
 		request.setAttribute("msgList", msgList);
 		String url = "WEB-INF/jsp/main.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
+	}
+	
+	private String getMessage(String thing) {
+		String msg = switch (thing) {
+			case "goblin" -> "ゴブリンが現れた！";
+			case "dragon" -> "ドラゴンが現れた！";
+			case "potion" -> "ポーションがあった！";
+			case "ether" -> "エーテルがあった！";
+			default -> "何も見当たらない";
+		};
+		return msg;
 	}
 
 }

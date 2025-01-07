@@ -52,12 +52,7 @@ public class Player extends GameLocation {
 	}
 	
 	public String look() {
-		String thing = Game.map[getY()][getX()];
-		if (thing.equals(".")) {
-			return "何もありません";
-		} else {
-			return thing;
-		}
+		return Game.map[getY()][getX()];
 	}
 	
 	public String toString() {
