@@ -93,4 +93,25 @@ public class EmployeesDAO {
 		}		
 		return true;
 	}
+
+	public Employee findById(String id) {
+		Employee emp = null;
+		getDriver();
+		try (Connection conn = DriverManager.getConnection
+				(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT name, age FROM employees WHERE id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			ResultSet rs = pStmt.executeQuery();
+			if (rs.next()) {
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				emp = new Employee(id, name, age);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}		
+		return emp;
+	}
 }
