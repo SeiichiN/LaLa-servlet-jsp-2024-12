@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+body, h1, h2, h3, p, ul {
+	margin: 0;
+}
+ul {
+	padding: 0;
+	list-style-type: none;
+}
+a {
+	color: #000;
+	text-decoration: none;
+}
+a:hover {
+	color: #000;
+}
+
+header {
+	padding: 10px 0;
+	margin-bottom: 20px;
+	background-color: lightblue;
+}
+header h1 {
+	width: 80%;
+	margin: 0 auto;
+}
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 10px 0;
+	text-align: center;
+	background-color: lightblue;
+}
+.container {
+	width: 80%;
+	margin: 0 auto 50px;
+	display: flex;
+	justify-content: space-between;
+}
+.container h2 {
+	margin-bottom: 16px;
+}
+.emp-list table {
+	border-collapse: collapse;
+}
+.emp-list th {
+	text-align: left;
+}
+.emp-list th, 
+.emp-list td {
+	border: solid 1px #aaa;
+	padding: 5px 8px;
+}
+.emp-list .no-border {
+	border: none;
+}
