@@ -52,4 +52,51 @@ public class EmployeesDAO {
 		}		
 		return empList;
 	}
+
+	public boolean isExists(String id) {
+		getDriver();
+		// db接続
+		try (Connection conn = DriverManager.getConnection
+				(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT COUNT(*) AS num FROM employees " + 
+				" WHERE id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			ResultSet rs = pStmt.executeQuery();
+
+			if (rs.next()) {
+				int num = rs.getInt("num");
+				if (num == 1) {
+					return true;
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}		
+		return false;
+	}
+
+	public boolean create(Employee emp) {
+		getDriver();
+		// db接続
+		try (Connection conn = DriverManager.getConnection
+				(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "INSERT INTO employees (id, name, age) " + 
+				" VALUES (?, ?, ?)";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, emp.getId());
+			pStmt.setString(2, emp.getName());
+			pStmt.setInt(3, emp.getAge());
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}		
+		return true;
+	}
 }
