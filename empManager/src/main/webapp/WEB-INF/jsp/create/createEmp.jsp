@@ -10,11 +10,23 @@
 		<main>
 			<section class="emp-list">
 				<h2>新規社員登録</h2>
+				
+				<c:if test="${not empty errorMsgList}">
+					<ul>
+						<c:forEach var="errorMsg" items="${errorMsgList}">
+							<li class="error"><c:out value="${errorMsg}"/></li>
+						</c:forEach>
+					</ul>
+				</c:if>
+				
 				<form action="CreateConfirmServlet" method="post">
 					<div>
-						ID: <input type="text" name="id"><br>
-						名前: <input type="text" name="name"><br>
-						年齢: <input type="text" name="age"><br>
+						ID: <input type="text" name="id" 
+						           value="<c:out value="${employee.id}"/>"><br>
+						名前: <input type="text" name="name" 
+						             value="<c:out value="${employee.name}"/>"><br>
+						年齢: <input type="text" name="age" 
+						             value="<c:out value="${employee.age}"/>"><br>
 					</div>
 					<input type="submit" formaction="list" formmethod="get" value="取消">
 					<input type="submit" value="確認"> 
