@@ -9,14 +9,15 @@ import model.IsDuplicateLogic;
 public class Validate {
 	public List<String> check(Employee emp, String path) {
 		List<String> errorMsgList = new ArrayList<>();
-		IsDuplicateLogic isDuplicateLogic = new IsDuplicateLogic();
-		if (isNull(emp.getId())) {
-			errorMsgList.add("IDが未入力です");
-		} else if (!emp.getId().matches("^EMP[0-9]{3}$")) {
-			errorMsgList.add("IDの形式が不正です");
-		} else if (path.equals("create") &&
-				isDuplicateLogic.execute(emp.getId())) {
-			errorMsgList.add("そのIDは使えません");
+		if (path.equals("create")) {
+			IsDuplicateLogic isDuplicateLogic = new IsDuplicateLogic();
+			if (isNull(emp.getId())) {
+				errorMsgList.add("IDが未入力です");
+			} else if (!emp.getId().matches("^EMP[0-9]{3}$")) {
+				errorMsgList.add("IDの形式が不正です");
+			} else if (isDuplicateLogic.execute(emp.getId())) {
+				errorMsgList.add("そのIDは使えません");
+			}
 		}
 		if (isNull(emp.getName())) {
 			errorMsgList.add("名前が未入力です");
