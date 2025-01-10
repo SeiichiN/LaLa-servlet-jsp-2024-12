@@ -24,7 +24,7 @@
 							<td><c:out value="${emp.name}"/></td>
 							<td><c:out value="${emp.age}"/></td>
 							<td class="no-border">
-								<form action="#" method="post">
+								<form action="UpdateServlet" method="post">
 									<button type="submit" name="id" 
 									        value="${emp.id}">編集</button>
 								</form>

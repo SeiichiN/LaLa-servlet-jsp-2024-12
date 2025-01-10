@@ -7,16 +7,18 @@ import model.Employee;
 import model.IsDuplicateIdLogic;
 
 public class ValidateUtil {
-	public List<String> check(Employee emp) {
+	public List<String> check(Employee emp, String mode) {
 		List<String> errorMsgList = new ArrayList<>();
 		// id check
-		IsDuplicateIdLogic logic = new IsDuplicateIdLogic();
-		if (isNull(emp.getId())) {
-			errorMsgList.add("IDが未入力です");
-		} else if (!emp.getId().matches("^EMP[0-9]{3}$")) {
-			errorMsgList.add("IDの形式が不正です");
-		} else if (logic.execute(emp.getId())) {
-			errorMsgList.add("そのIDは使えません");
+		if (mode.equals("create")) {
+			IsDuplicateIdLogic logic = new IsDuplicateIdLogic();
+			if (isNull(emp.getId())) {
+				errorMsgList.add("IDが未入力です");
+			} else if (!emp.getId().matches("^EMP[0-9]{3}$")) {
+				errorMsgList.add("IDの形式が不正です");
+			} else if (logic.execute(emp.getId())) {
+				errorMsgList.add("そのIDは使えません");
+			}
 		}
 		
 		// name check
