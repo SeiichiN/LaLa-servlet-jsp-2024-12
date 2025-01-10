@@ -112,7 +112,6 @@ public class EmployeesDAO {
 			e.printStackTrace();
 			return null;
 		}
-		System.out.println(emp);
 		return emp;
 	}
 
@@ -153,5 +152,29 @@ public class EmployeesDAO {
 			return false;
 		}		
 		return true;
+	}
+
+	public List<Employee> findByName(String nameTxt) {
+		List<Employee> empList = new ArrayList<>();
+		getDriver();
+		try (Connection conn = DriverManager.getConnection
+				(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT id, name, age FROM employees "
+					+ " WHERE name like ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, "%" + nameTxt + "%");
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				Employee emp = new Employee(id, name, age);
+				empList.add(emp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return empList;
 	}
 }

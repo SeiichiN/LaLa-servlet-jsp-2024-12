@@ -21,7 +21,7 @@ public class CreateConfirmServlet extends HttpServlet {
 		SetEmployee setEmployee = new SetEmployee();
 		Employee employee = setEmployee.set(request);
 		Validate validate = new Validate();
-		List<String> errorMsgList = validate.check(employee, "create");
+		List<String> errorMsgList = validate.check(employee, request.getServletPath());
 		request.setAttribute("employee", employee);
 		String url = null;
 		if (errorMsgList.size() > 0) {

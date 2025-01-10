@@ -4,7 +4,7 @@
 	<h2>補助機能</h2>
 	<p><a href="CreateServlet"><button>新規登録</button></a></p>
 	<div class="find-name">
-		<form action="#" method="post">
+		<form action="SearchNameServlet" method="post">
 			<input type="text" name="name" placeholder="名前">
 			<input type="submit" value="検索">
 		</form>

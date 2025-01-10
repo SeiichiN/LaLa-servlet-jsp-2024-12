@@ -20,9 +20,9 @@ public class UpdateConfirmServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SetEmployee setEmployee = new SetEmployee();
 		Employee employee = setEmployee.set(request);
-		System.out.println(employee);
 		Validate validate = new Validate();
-		List<String> errorMsgList = validate.check(employee, "update");
+		
+		List<String> errorMsgList = validate.check(employee, request.getServletPath());
 		request.setAttribute("employee", employee);
 		String url = null;
 		if (errorMsgList.size() > 0) {

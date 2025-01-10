@@ -9,7 +9,7 @@ import model.IsDuplicateLogic;
 public class Validate {
 	public List<String> check(Employee emp, String path) {
 		List<String> errorMsgList = new ArrayList<>();
-		if (path.equals("create")) {
+		if (path.equals("/CreateConfirmServlet")) {
 			IsDuplicateLogic isDuplicateLogic = new IsDuplicateLogic();
 			if (isNull(emp.getId())) {
 				errorMsgList.add("IDが未入力です");
