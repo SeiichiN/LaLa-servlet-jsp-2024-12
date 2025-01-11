@@ -21,6 +21,7 @@ public class DoneServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath();
 		String msg = null;
+		String title_h2 = null;
 		
 		switch (path) {
 		case "/createDone" -> {
@@ -32,6 +33,7 @@ public class DoneServlet extends HttpServlet {
 			} else {
 				msg = "登録に失敗しました";
 			}
+			title_h2 = "新規登録";
 		}
 		case "/updateDone" -> {
 			SetEmployeeUtil util = new SetEmployeeUtil();
@@ -41,7 +43,8 @@ public class DoneServlet extends HttpServlet {
 				msg = "更新しました";
 			} else {
 				msg = "更新に失敗しました";
-			}			
+			}
+			title_h2 = "社員情報更新";
 		}
 		case "/removeDone" -> {
 			String id = request.getParameter("id");
@@ -51,10 +54,11 @@ public class DoneServlet extends HttpServlet {
 		   } else {
 			   msg = "削除に失敗しました。";
 		   }
-			
+			title_h2 = "社員情報削除";
 		}
 		}
 		request.setAttribute("msg", msg);
+		request.setAttribute("title_h2", title_h2);
 		String url = "WEB-INF/jsp/done/done.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
 	}

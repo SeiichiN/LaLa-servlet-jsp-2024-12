@@ -23,21 +23,19 @@ public class ConfirmServlet extends HttpServlet {
 		SetEmployeeUtil setEmployeeUtil = new SetEmployeeUtil();
 		Employee employee = setEmployeeUtil.set(request);
 		ValidateUtil validateUtil = new ValidateUtil();
-		List<String> errorMsgList = null;
+		List<String> errorMsgList = validateUtil.check(employee, path); 
 		String title_h2 = null;
 		String url = null;
 		String input_jspfile = null;
 		String confirm_jspfile = null;
 		switch (path) {
 		case "/createConfirm" -> {
-			errorMsgList = validateUtil.createCheck(employee);
 			title_h2 = "新規登録";
 			input_jspfile = "create.jsp";
 			confirm_jspfile = "createConfirm.jsp";
 			
 		}
 		case "/updateConfirm" -> {
-			errorMsgList = validateUtil.updateCheck(employee);
 			title_h2 = "社員情報編集";
 			input_jspfile = "update.jsp";
 			confirm_jspfile = "updateConfirm.jsp";

@@ -9,19 +9,15 @@ import model.IsDuplicateIdLogic;
 public class ValidateUtil {
 	private List<String> errorMsgList = new ArrayList<>();
 
-	public List<String> createCheck(Employee emp) {
-		idCheck(emp);
+	public List<String> check(Employee emp, String path) {
+		if (path.equals("/createConfirm")) {
+			idCheck(emp);
+		}
 		nameCheck(emp);
 		ageCheck(emp);
 		return errorMsgList;
 	}
-	
-	public List<String> updateCheck(Employee emp) {
-		nameCheck(emp);
-		ageCheck(emp);
-		return errorMsgList;
-	}
-	
+		
 	private void idCheck(Employee emp) {
 		IsDuplicateIdLogic logic = new IsDuplicateIdLogic();
 		if (isNull(emp.getId())) {
