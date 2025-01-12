@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="model.User" %>
-<%@ page import="model.Mutter, java.util.List" %>
+<%@ page import="bean.User" %>
+<%@ page import="bean.Mutter, java.util.List" %>
 <%
 User loginUser = (User) session.getAttribute("loginUser");
 @SuppressWarnings("unchecked")
