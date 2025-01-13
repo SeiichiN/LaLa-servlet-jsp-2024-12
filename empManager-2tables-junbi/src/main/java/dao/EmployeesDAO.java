@@ -47,6 +47,39 @@ public class EmployeesDAO {
 			  ON e.dept_id = d.id
 			WHERE e.id = ?
 			""";
+
+	private final String SQL_FINDBYNAME = 
+			"""
+			SELECT
+			  e.id AS empId,
+			  e.name AS empName,
+			  e.gender AS gender,
+			  timestampdiff(year, e.birthday, curdate()) AS age,
+			  e.birthday AS birthday,
+			  d.id AS deptId,
+			  d.name AS deptName
+			FROM EMPLOYEES e
+			  INNER JOIN departments d
+			  ON e.dept_id = d.id
+			WHERE e.name like ?
+			""";
+	
+	private final String SQL_FINDBY_DEPTID = 
+			"""
+			SELECT
+			  e.id AS empId,
+			  e.name AS empName,
+			  e.gender AS gender,
+			  timestampdiff(year, e.birthday, curdate()) AS age,
+			  e.birthday AS birthday,
+			  d.id AS deptId,
+			  d.name AS deptName
+			FROM EMPLOYEES e
+			  INNER JOIN departments d
+			  ON e.dept_id = d.id
+			WHERE d.id = ?
+			""";
+
 	
 	private final String SQL_CREATE = 
 			"""
@@ -128,6 +161,61 @@ public class EmployeesDAO {
 		return emp;
 	}
 	
+	public List<Employee> findByName(String _name) {
+		List<Employee> empList = new ArrayList<>();
+		getDriver();
+		try (Connection conn = DriverManager.getConnection
+				(JDBC_URL, DB_USER, DB_PASS)) {
+			PreparedStatement pStmt = conn.prepareStatement(SQL_FINDBYNAME);
+			pStmt.setString(1, "%" + _name + "%");
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				int empId = rs.getInt("empId");
+				String empName = rs.getString("empName");
+				int gender = rs.getInt("gender");
+				int age = rs.getInt("age");
+				String _birthday = rs.getString("birthday");
+				String birthday = _birthday.replaceAll("-", "/");
+				int deptId = rs.getInt("deptId");
+				String deptName = rs.getString("deptName");
+				Dept dept = new Dept(deptId, deptName);
+				Employee emp = new Employee(empId, empName, gender, age, birthday, dept);
+				empList.add(emp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return empList;
+	}
+
+	public List<Employee> findByDeptId(int deptId) {
+		List<Employee> empList = new ArrayList<>();
+		getDriver();
+		try (Connection conn = DriverManager.getConnection
+				(JDBC_URL, DB_USER, DB_PASS)) {
+			PreparedStatement pStmt = conn.prepareStatement(SQL_FINDBY_DEPTID);
+			pStmt.setInt(1, deptId);
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				int empId = rs.getInt("empId");
+				String empName = rs.getString("empName");
+				int gender = rs.getInt("gender");
+				int age = rs.getInt("age");
+				String _birthday = rs.getString("birthday");
+				String birthday = _birthday.replaceAll("-", "/");
+				String deptName = rs.getString("deptName");
+				Dept dept = new Dept(deptId, deptName);
+				Employee emp = new Employee(empId, empName, gender, age, birthday, dept);
+				empList.add(emp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return empList;
+	}
+
 	public boolean create(EmployeeForm empForm) {
 		getDriver();
 		try (Connection conn = DriverManager.getConnection
