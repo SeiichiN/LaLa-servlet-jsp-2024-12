@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,8 @@ public class PersonDAO {
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				String birthday = rs.getString("birthday");
+				LocalDate birthDate = rs.getDate("birthday").toLocalDate();
+				String birthday = birthDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 				Person person = new Person(id, name, birthday);
 				personList.add(person);
 			}
@@ -70,9 +73,8 @@ public class PersonDAO {
 			String sql = "INSERT INTO person (name, birthday) VALUES (?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, person.getName());
-			Date date = Date.valueOf(person.getBirthday());
+			Date date = Date.valueOf(person.getBirthday().replace("/", "-"));
 			pStmt.setDate(2, date);
-			// pStmt.setString(2, person.getBirthday());
 			int result = pStmt.executeUpdate();
 			if (result != 1) {
 				return false;

@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,25 +104,30 @@ public class EmployeesDAO {
 		}		
 	}
 	
-	private int getAgeFromBirthday(Date birthday) {
-		LocalDate birthDate = birthday.toLocalDate(); // LocalDate 型に変換
+	private int getAgeFromBirthday(LocalDate birthDate) {
+		// LocalDate birthDate = birthday.toLocalDate();
 		LocalDate today = LocalDate.now();
-		int age = Period.between(birthDate, today).getYears(); // 年齢計算
-		return age;
+		return Period.between(birthDate, today).getYears(); // 年齢計算
 	}
 	
 	private Employee getEmployeeFromRs(ResultSet rs) throws SQLException {
 		int empId = rs.getInt("empId");
 		String empName = rs.getString("empName");
 		int gender = rs.getInt("gender");
-		Date _birthday = rs.getDate("birthday");
-		int age = getAgeFromBirthday(_birthday);
-		String birthday = _birthday.toString().replace("-", "/");
+		LocalDate birthDate = rs.getDate("birthday").toLocalDate();
+		int age = getAgeFromBirthday(birthDate);
+		String birthday = birthDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 		int deptId = rs.getInt("deptId");
 		String deptName = rs.getString("deptName");
 		Dept dept = new Dept(deptId, deptName);
 		Employee employee = new Employee(empId, empName, gender, age, birthday, dept);
 		return employee;
+	}
+	
+	private Date str2date(String dateTxt) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate lDate = LocalDate.parse(dateTxt, dtf);
+		return Date.valueOf(lDate);
 	}
 	
 	public List<Employee> findAll() {
@@ -211,7 +217,7 @@ public class EmployeesDAO {
 				pStmt.setString(1, empForm.getName());
 				pStmt.setInt(2, empForm.getGender());
 				String birthday = empForm.getBirthday().replaceAll("/", "-");
-				pStmt.setString(3, birthday);
+				pStmt.setDate(3, Date.valueOf(birthday));
 				pStmt.setInt(4, empForm.getDeptId());
 				int result = pStmt.executeUpdate();
 				if (result != 1) {
