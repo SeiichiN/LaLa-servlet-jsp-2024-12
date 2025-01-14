@@ -30,7 +30,7 @@
 								</form>
 							</td>
 							<td class="no-border">
-								<form action="#" method="post">
+								<form action="RemoveServlet" method="post">
 									<button type="submit" name="id" 
 									        value="${emp.id}">削除</button>
 								</form>
