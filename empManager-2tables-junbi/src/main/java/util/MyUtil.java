@@ -1,5 +1,6 @@
 package util;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -37,4 +38,7 @@ public class MyUtil {
 		}
 	}
 	
+	public static String date2str(Date date) {
+		return date.toString();
+	}
 }

@@ -70,7 +70,9 @@ public class PersonDAO {
 			String sql = "INSERT INTO person (name, birthday) VALUES (?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, person.getName());
-			pStmt.setString(2, person.getBirthday());
+			Date date = Date.valueOf(person.getBirthday());
+			pStmt.setDate(2, date);
+			// pStmt.setString(2, person.getBirthday());
 			int result = pStmt.executeUpdate();
 			if (result != 1) {
 				return false;

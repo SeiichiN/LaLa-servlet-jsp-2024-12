@@ -1,5 +1,5 @@
 --
--- データベース: date_test
+-- データベース: data_test
 --
 
 -- person テーブル

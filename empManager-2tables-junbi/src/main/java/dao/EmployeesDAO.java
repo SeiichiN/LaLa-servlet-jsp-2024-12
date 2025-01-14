@@ -1,10 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,6 @@ public class EmployeesDAO {
 			"  e.id AS empId, " +
 			"  e.name AS empName, " +
 			"  e.gender AS gender, " +
-			"  timestampdiff(year, e.birthday, curdate()) AS age, " +
 			"  e.birthday AS birthday, " +
 			"  d.id AS deptId, " +
 			"  d.name AS deptName " +
@@ -38,7 +40,6 @@ public class EmployeesDAO {
 			  e.id AS empId,
 			  e.name AS empName,
 			  e.gender AS gender,
-			  timestampdiff(year, e.birthday, curdate()) AS age,
 			  e.birthday AS birthday,
 			  d.id AS deptId,
 			  d.name AS deptName
@@ -54,7 +55,6 @@ public class EmployeesDAO {
 			  e.id AS empId,
 			  e.name AS empName,
 			  e.gender AS gender,
-			  timestampdiff(year, e.birthday, curdate()) AS age,
 			  e.birthday AS birthday,
 			  d.id AS deptId,
 			  d.name AS deptName
@@ -70,7 +70,6 @@ public class EmployeesDAO {
 			  e.id AS empId,
 			  e.name AS empName,
 			  e.gender AS gender,
-			  timestampdiff(year, e.birthday, curdate()) AS age,
 			  e.birthday AS birthday,
 			  d.id AS deptId,
 			  d.name AS deptName
@@ -104,6 +103,27 @@ public class EmployeesDAO {
 		}		
 	}
 	
+	private int getAgeFromBirthday(Date birthday) {
+		LocalDate birthDate = birthday.toLocalDate(); // LocalDate 型に変換
+		LocalDate today = LocalDate.now();
+		int age = Period.between(birthDate, today).getYears(); // 年齢計算
+		return age;
+	}
+	
+	private Employee getEmployeeFromRs(ResultSet rs) throws SQLException {
+		int empId = rs.getInt("empId");
+		String empName = rs.getString("empName");
+		int gender = rs.getInt("gender");
+		Date _birthday = rs.getDate("birthday");
+		int age = getAgeFromBirthday(_birthday);
+		String birthday = _birthday.toString().replace("-", "/");
+		int deptId = rs.getInt("deptId");
+		String deptName = rs.getString("deptName");
+		Dept dept = new Dept(deptId, deptName);
+		Employee employee = new Employee(empId, empName, gender, age, birthday, dept);
+		return employee;
+	}
+	
 	public List<Employee> findAll() {
 		List<Employee> empList = new ArrayList<>();
 		getDriver();
@@ -115,16 +135,7 @@ public class EmployeesDAO {
 			ResultSet rs = pStmt.executeQuery();
 			// 表示
 			while (rs.next()) {
-				int empId = rs.getInt("empId");
-				String empName = rs.getString("empName");
-				int gender = rs.getInt("gender");
-				int age = rs.getInt("age");
-				String _birthday = rs.getString("birthday");
-				String birthday = _birthday.replaceAll("-", "/");
-				int deptId = rs.getInt("deptId");
-				String deptName = rs.getString("deptName");
-				Dept dept = new Dept(deptId, deptName);
-				Employee employee = new Employee(empId, empName, gender, age, birthday, dept);
+				Employee employee = getEmployeeFromRs(rs);
 				empList.add(employee);
 			}
 			
@@ -144,15 +155,7 @@ public class EmployeesDAO {
 			pStmt.setInt(1, empId);
 			ResultSet rs = pStmt.executeQuery();
 			if (rs.next()) {
-				String empName = rs.getString("empName");
-				int gender = rs.getInt("gender");
-				int age = rs.getInt("age");
-				String _birthday = rs.getString("birthday");
-				String birthday = _birthday.replaceAll("-", "/");
-				int deptId = rs.getInt("deptId");
-				String deptName = rs.getString("deptName");
-				Dept dept = new Dept(deptId, deptName);
-				emp = new Employee(empId, empName, gender, age, birthday, dept);
+				emp = getEmployeeFromRs(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,16 +173,7 @@ public class EmployeesDAO {
 			pStmt.setString(1, "%" + _name + "%");
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
-				int empId = rs.getInt("empId");
-				String empName = rs.getString("empName");
-				int gender = rs.getInt("gender");
-				int age = rs.getInt("age");
-				String _birthday = rs.getString("birthday");
-				String birthday = _birthday.replaceAll("-", "/");
-				int deptId = rs.getInt("deptId");
-				String deptName = rs.getString("deptName");
-				Dept dept = new Dept(deptId, deptName);
-				Employee emp = new Employee(empId, empName, gender, age, birthday, dept);
+				Employee emp = getEmployeeFromRs(rs);
 				empList.add(emp);
 			}
 		} catch (SQLException e) {
@@ -198,15 +192,7 @@ public class EmployeesDAO {
 			pStmt.setInt(1, deptId);
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
-				int empId = rs.getInt("empId");
-				String empName = rs.getString("empName");
-				int gender = rs.getInt("gender");
-				int age = rs.getInt("age");
-				String _birthday = rs.getString("birthday");
-				String birthday = _birthday.replaceAll("-", "/");
-				String deptName = rs.getString("deptName");
-				Dept dept = new Dept(deptId, deptName);
-				Employee emp = new Employee(empId, empName, gender, age, birthday, dept);
+				Employee emp = getEmployeeFromRs(rs);
 				empList.add(emp);
 			}
 		} catch (SQLException e) {
