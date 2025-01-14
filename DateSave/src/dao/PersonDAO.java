@@ -12,7 +12,7 @@ import java.util.List;
 import model.Person;
 
 public class PersonDAO {
-	private final String JDBC_URL = "jdbc:h2:tcp://localhost/~/date_test";
+	private final String JDBC_URL = "jdbc:h2:tcp://localhost/~/data_test";
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 	
@@ -53,6 +53,24 @@ public class PersonDAO {
 			pStmt.setString(1, person.getName());
 			Date date = Date.valueOf(person.getBirthday());
 			pStmt.setDate(2, date);
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean createByString(Person person) {
+		getDriver();
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "INSERT INTO person (name, birthday) VALUES (?, ?)";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, person.getName());
+			pStmt.setString(2, person.getBirthday());
 			int result = pStmt.executeUpdate();
 			if (result != 1) {
 				return false;
