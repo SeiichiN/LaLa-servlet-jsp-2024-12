@@ -1,4 +1,4 @@
-package servlet.update;
+package servlet.remove;
 
 import java.io.IOException;
 
@@ -8,26 +8,23 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import model.Employee;
-import model.UpdateEmpLogic;
-import servlet.util.SetEmployeeUtil;
+import model.RemoveEmpLogic;
 
-@WebServlet("/UpdateDoneServlet")
-public class UpdateDoneServlet extends HttpServlet {
+@WebServlet("/RemoveDoneServlet")
+public class RemoveDoneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SetEmployeeUtil util = new SetEmployeeUtil();
-		Employee employee = util.set(request);
-		UpdateEmpLogic logic = new UpdateEmpLogic();
+		String id = request.getParameter("id");
+		RemoveEmpLogic logic = new RemoveEmpLogic();
 		String msg = null;
-		if (logic.execute(employee)) {
-			msg = "更新しました";
+		if (logic.execute(id)) {
+			msg = "削除しました";
 		} else {
-			msg = "更新に失敗しました";
+			msg = "削除に失敗しました";
 		}
 		request.setAttribute("msg", msg);
-		String url = "WEB-INF/jsp/update/updateDone.jsp";
+		String url = "WEB-INF/jsp/remove/removeDone.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
 	}
 

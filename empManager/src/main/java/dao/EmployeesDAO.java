@@ -122,4 +122,45 @@ public class EmployeesDAO {
 		}
 		return employee;
 	}
+	
+	public boolean remove(String id) {
+		getDriver();
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "DELETE FROM employees WHERE id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean update(Employee emp) {
+		getDriver();
+		try (Connection conn = 
+				DriverManager.getConnection
+				  (JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "UPDATE employees SET name = ?, age = ?" + 
+				         " WHERE id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, emp.getName());
+			pStmt.setInt(2, emp.getAge());
+			pStmt.setString(3, emp.getId());
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	
 }
