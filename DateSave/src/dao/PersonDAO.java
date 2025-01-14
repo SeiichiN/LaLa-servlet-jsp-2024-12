@@ -45,7 +45,23 @@ public class PersonDAO {
 		return personList;
 	}
 	
-	private Date toDate(String dateTxt) {
-		
+	public boolean create(Person person) {
+		getDriver();
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "INSERT INTO person (name, birthday) VALUES (?, ?)";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, person.getName());
+			Date date = Date.valueOf(person.getBirthday());
+			pStmt.setDate(2, date);
+			int result = pStmt.executeUpdate();
+			if (result != 1) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
+	
 }
