@@ -18,7 +18,7 @@ public class InputServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title_h2", "新規社員登録");
-		request.setAttribute("input_jspfile", "createInput.jsp");
+		request.setAttribute("input_form", "_createInput.jsp");
 		String url = "WEB-INF/jsp/input/input.jsp";
 		request.getRequestDispatcher(url).forward(request, response);
 	}
@@ -32,19 +32,19 @@ public class InputServlet extends HttpServlet {
 		
 		String path = request.getServletPath();
 		String title_h2 = null;
-		String input_jspfile = null;
+		String input_form = null;
 		switch (path) {
 		case "/updateInput" -> {
 			title_h2 = "社員情報更新";
-			input_jspfile = "updateInput.jsp";
+			input_form = "_updateInput.jsp";
 		}
 		case "/removeInput" -> {
 			title_h2 = "社員情報削除";
-			input_jspfile = "removeInput.jsp";
+			input_form = "_removeInput.jsp";
 		}
 		}
 		request.setAttribute("title_h2", title_h2);
-		request.setAttribute("input_jspfile", input_jspfile);
+		request.setAttribute("input_form", input_form);
 		String url = "WEB-INF/jsp/input/input.jsp";
 		request.getRequestDispatcher(url).forward(request, response);		
 	}

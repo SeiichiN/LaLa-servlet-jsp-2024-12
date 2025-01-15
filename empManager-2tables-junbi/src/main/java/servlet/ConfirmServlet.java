@@ -26,28 +26,28 @@ public class ConfirmServlet extends HttpServlet {
 		List<String> errorMsgList = validateUtil.check(employeeForm); 
 		String title_h2 = null;
 		String url = null;
-		String input_jspfile = null;
-		String confirm_jspfile = null;
+		String input_form = null;
+		String confirm_form = null;
 		switch (path) {
 		case "/createConfirm" -> {
 			title_h2 = "新規登録";
-			input_jspfile = "createInput.jsp";
-			confirm_jspfile = "createConfirm.jsp";
+			input_form = "_createInput.jsp";
+			confirm_form = "_createConfirm.jsp";
 			
 		}
 		case "/updateConfirm" -> {
 			title_h2 = "社員情報編集";
-			input_jspfile = "updateInput.jsp";
-			confirm_jspfile = "updateConfirm.jsp";
+			input_form = "_updateInput.jsp";
+			confirm_form = "_updateConfirm.jsp";
 		}
 		}
 		if (errorMsgList.size() > 0) {
 			request.setAttribute("errorMsgList", errorMsgList);
 			url = "WEB-INF/jsp/input/input.jsp";
-			request.setAttribute("input_jspfile", input_jspfile);
+			request.setAttribute("input_form", input_form);
 		} else {
 			url = "WEB-INF/jsp/confirm/confirm.jsp";
-			request.setAttribute("confirm_jspfile", confirm_jspfile);
+			request.setAttribute("confirm_form", confirm_form);
 		}
 		request.setAttribute("title_h2", title_h2);
 		request.setAttribute("employeeForm", employeeForm);

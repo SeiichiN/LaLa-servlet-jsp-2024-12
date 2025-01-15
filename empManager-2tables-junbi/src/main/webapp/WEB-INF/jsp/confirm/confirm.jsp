@@ -25,7 +25,7 @@
 						</c:forEach>
 				</div>
 
-				<jsp:include page="${confirm_jspfile}"/>
+				<jsp:include page="${confirm_form}"/>
 			</section>
 		</main>
 		<jsp:include page="../common/aside.jsp"/>	
