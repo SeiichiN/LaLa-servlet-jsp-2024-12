@@ -10,6 +10,11 @@
 		<main>
 			<section class="emp-list">
 				<h2>社員一覧</h2>
+				
+				<c:if test="${not empty msg}">
+					<p class="error"><c:out value="${msg}"/></p>
+				</c:if>
+				
 				<table>
 					<tr>
 						<th>ID</th>
