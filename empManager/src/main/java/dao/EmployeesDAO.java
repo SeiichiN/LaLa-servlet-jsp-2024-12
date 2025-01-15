@@ -52,6 +52,32 @@ public class EmployeesDAO {
 		}		
 		return empList;
 	}
+	
+	public List<Employee> findByName(String _name) {
+		List<Employee> empList = new ArrayList<>();
+		getDriver();
+		try (Connection conn = 
+				DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "SELECT id, name, age FROM employees " + 
+				         " WHERE name like ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, "%" + _name + "%");
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				Employee emp = new Employee(id, name, age);
+				empList.add(emp);
+			}
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			empList = null;
+		}
+		
+		return empList;
+	}
 
 	public boolean isExists(String id) {
 		getDriver();
