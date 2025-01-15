@@ -216,8 +216,9 @@ public class EmployeesDAO {
 			try (PreparedStatement pStmt = conn.prepareStatement(SQL_CREATE)) {
 				pStmt.setString(1, empForm.getName());
 				pStmt.setInt(2, empForm.getGender());
-				String birthday = empForm.getBirthday().replaceAll("/", "-");
-				pStmt.setDate(3, Date.valueOf(birthday));
+				// String birthday = empForm.getBirthday().replaceAll("/", "-");
+				Date birthDate = str2date(empForm.getBirthday());
+				pStmt.setDate(3, birthDate);
 				pStmt.setInt(4, empForm.getDeptId());
 				int result = pStmt.executeUpdate();
 				if (result != 1) {
@@ -243,8 +244,9 @@ public class EmployeesDAO {
 			try (PreparedStatement pStmt = conn.prepareStatement(SQL_UPDATE)) {
 				pStmt.setString(1, empForm.getName());
 				pStmt.setInt(2, empForm.getGender());
-				String birthday = empForm.getBirthday().replaceAll("/", "-");
-				pStmt.setString(3, birthday);
+				// String birthday = empForm.getBirthday().replaceAll("/", "-");
+				Date birthDate = str2date(empForm.getBirthday());
+				pStmt.setDate(3, birthDate);
 				pStmt.setInt(4, empForm.getDeptId());
 				pStmt.setInt(5, empForm.getId());
 				int result = pStmt.executeUpdate();
