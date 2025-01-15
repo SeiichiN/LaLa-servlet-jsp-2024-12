@@ -110,13 +110,17 @@ public class EmployeesDAO {
 		return Period.between(birthDate, today).getYears(); // 年齢計算
 	}
 	
+	private String date2str(LocalDate date) {
+		return date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+	}
+	
 	private Employee getEmployeeFromRs(ResultSet rs) throws SQLException {
 		int empId = rs.getInt("empId");
 		String empName = rs.getString("empName");
 		int gender = rs.getInt("gender");
 		LocalDate birthDate = rs.getDate("birthday").toLocalDate();
 		int age = getAgeFromBirthday(birthDate);
-		String birthday = birthDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		String birthday = date2str(birthDate);
 		int deptId = rs.getInt("deptId");
 		String deptName = rs.getString("deptName");
 		Dept dept = new Dept(deptId, deptName);
