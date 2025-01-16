@@ -8,15 +8,27 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
+import bean.Dept;
 import bean.Employee;
 import model.GetListLogic;
+import model.dept.GetDeptListLogic;
 
 @WebServlet("/list")
 public class ListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		@SuppressWarnings("unchecked")
+		List<Dept> deptList = (List<Dept>)session.getAttribute("deptList");
+		if (deptList == null) {
+			GetDeptListLogic getDeptListLogic = new GetDeptListLogic();
+			deptList = getDeptListLogic.execute();
+			session.setAttribute("deptList", deptList);
+		}
+		
 		GetListLogic getListLogic = new GetListLogic();
 		List<Employee> empList = getListLogic.execute();
 		request.setAttribute("empList", empList);
