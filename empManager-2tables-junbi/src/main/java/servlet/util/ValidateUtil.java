@@ -3,6 +3,7 @@ package servlet.util;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ValidateUtil {
 	}
 	
 	private void birthdayCheck(EmployeeForm empForm) {
-		if (!MyUtil.isDate(empForm.getBirthday())) {
+		if (!isDate(empForm.getBirthday())) {
 			errorMsgList.add("誕生日の日付が不正です");
 		}
 	}
@@ -56,4 +57,22 @@ public class ValidateUtil {
 		return false;
 	}
 	
+	public static boolean isDate(String dateTxt) {
+		String[] data = dateTxt.split("/");
+		String year = data[0];
+		String month = "0" + data[1];
+		month = month.substring(month.length() - 2);
+		String day = "0" + data[2];
+		day = day.substring(day.length() - 2);
+		dateTxt = year + "/" + month + "/" + day;
+
+		String pattern = "yyyy/MM/dd";
+		try {
+			LocalDate.parse(dateTxt, DateTimeFormatter.ofPattern(pattern));
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
+	}
+
 }

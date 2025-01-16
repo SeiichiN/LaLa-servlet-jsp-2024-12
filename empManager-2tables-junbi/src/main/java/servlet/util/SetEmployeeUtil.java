@@ -25,6 +25,7 @@ public class SetEmployeeUtil {
 		birthday = birthday.replaceAll("　", " ").trim();
 
 		String _deptId = request.getParameter("deptId");
+		_deptId = _deptId.replaceAll("　", " ").trim();
 		int deptId = MyUtil.myParseInt(_deptId);
 		
 		EmployeeForm employeeForm = new EmployeeForm(id, name, gender, birthday, deptId);

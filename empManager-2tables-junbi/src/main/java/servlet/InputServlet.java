@@ -11,6 +11,7 @@ import servlet.util.SetEmployeeUtil;
 import java.io.IOException;
 
 import bean.Employee;
+import bean.EmployeeForm;
 
 @WebServlet(urlPatterns = {"/createInput", "/updateInput", "/removeInput"})
 public class InputServlet extends HttpServlet {
@@ -28,7 +29,8 @@ public class InputServlet extends HttpServlet {
 		int empId = Integer.parseInt(_empId);
 		FindEmpByIdLogic logic = new FindEmpByIdLogic();
 		Employee employee = logic.execute(empId);
-		request.setAttribute("employee", employee);
+		EmployeeForm employeeForm = convertForm(employee);
+		request.setAttribute("employeeForm", employeeForm);
 		
 		String path = request.getServletPath();
 		String title_h2 = null;
@@ -47,6 +49,15 @@ public class InputServlet extends HttpServlet {
 		request.setAttribute("input_form", input_form);
 		String url = "WEB-INF/jsp/input/input.jsp";
 		request.getRequestDispatcher(url).forward(request, response);		
+	}
+	
+	private EmployeeForm convertForm(Employee emp) {
+		int id = emp.getId();
+		String name = emp.getName();
+		int gender = emp.getGender();
+		String birthday = emp.getBirthday();
+		int deptId = emp.getDept().getId();
+		return new EmployeeForm(id, name, gender, birthday, deptId);
 	}
 
 }
