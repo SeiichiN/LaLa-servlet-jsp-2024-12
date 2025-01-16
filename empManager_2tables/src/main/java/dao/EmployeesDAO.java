@@ -60,8 +60,8 @@ public class EmployeesDAO {
 		String empName = rs.getString("empName");
 		int gender = rs.getInt("gender");
 		LocalDate birthDate = rs.getDate("birthday").toLocalDate();
-		String birthday = date2str(birthDate);
 		int age = getAgeFromBirthday(birthDate);
+		String birthday = date2str(birthDate);
 		int deptId = rs.getInt("deptId");
 		String deptName = rs.getString("deptName");
 		Dept dept = new Dept(deptId, deptName);
