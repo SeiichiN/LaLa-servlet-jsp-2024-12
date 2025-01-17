@@ -25,6 +25,28 @@ public class DepartmentsDAO {
 			  ("JDBCドライバーを読み込めません");
 		}		
 	}
+	// true -- そのdeptIdは存在する
+	public boolean isExistsId(int deptId) {
+		getDriver();
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			String sql = "Select count(*) AS num FROM departments " + 
+		                  " WHERE id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, deptId);
+			ResultSet rs = pStmt.executeQuery();
+			int num = 0;
+			if (rs.next()) {
+				num = rs.getInt("num");
+			}
+			if (num == 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
 	
 	public List<Dept> findAll() {
 		List<Dept> deptList = new ArrayList<>();
@@ -45,4 +67,6 @@ public class DepartmentsDAO {
 		}
 		return deptList;
 	}
+	
+	
 }
