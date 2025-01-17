@@ -19,7 +19,7 @@
 					</ul>
 				</c:if>
 				
-				<jsp:include page="_createForm.jsp"/>
+				<jsp:include page="${input_form}"/>
 
 			</section>
 		</main>

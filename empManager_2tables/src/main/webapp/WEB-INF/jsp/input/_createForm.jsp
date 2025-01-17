@@ -15,7 +15,7 @@
 		部署:  <select name="deptId">
 		       		<c:forEach var="dept" items="${deptList}">
 		       			<option value="${dept.id}" 
-		       			      ${employeeForm.dept.id == dept.id ? 'selected' : ''}>
+		       			      ${employeeForm.deptId == dept.id ? 'selected' : ''}>
 		       			  <c:out value="${dept.name}"/>
 		       			</option>
 		       		</c:forEach>

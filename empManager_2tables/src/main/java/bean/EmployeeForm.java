@@ -7,17 +7,17 @@ public class EmployeeForm implements Serializable {
 	private String name;
 	private int gender;
 	private String birthday;
-	private int dept_id;
+	private int deptId;
 	
 	public EmployeeForm() {}
 
-	public EmployeeForm(int id, String name, int gender, String birthday, int dept_id) {
+	public EmployeeForm(int id, String name, int gender, String birthday, int deptId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.birthday = birthday;
-		this.dept_id = dept_id;
+		this.deptId = deptId;
 	}
 
 	public int getId() {
@@ -52,18 +52,20 @@ public class EmployeeForm implements Serializable {
 		this.birthday = birthday;
 	}
 
-	public int getDept_id() {
-		return dept_id;
+	public int getDeptId() {
+		return deptId;
 	}
 
-	public void setDept_id(int dept_id) {
-		this.dept_id = dept_id;
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
 	}
 
 	@Override
 	public String toString() {
 		return "EmployeeForm [id=" + id + ", name=" + name + ", gender=" + gender + ", birthday=" + birthday
-				+ ", dept_id=" + dept_id + "]";
+				+ ", deptId=" + deptId + "]";
 	}
+
+
 	
 }
