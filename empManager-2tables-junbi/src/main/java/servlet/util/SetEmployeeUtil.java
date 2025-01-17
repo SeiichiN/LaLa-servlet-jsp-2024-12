@@ -1,8 +1,9 @@
 package servlet.util;
 
 import jakarta.servlet.http.HttpServletRequest;
-import util.MyUtil;
+
 import bean.EmployeeForm;
+import util.MyUtil;
 
 public class SetEmployeeUtil {
 	public EmployeeForm set(HttpServletRequest request) {
@@ -23,6 +24,7 @@ public class SetEmployeeUtil {
 		
 		String birthday = request.getParameter("birthday");
 		birthday = birthday.replaceAll("　", " ").trim();
+		birthday = formatDate(birthday);
 
 		String _deptId = request.getParameter("deptId");
 		_deptId = _deptId.replaceAll("　", " ").trim();
@@ -30,6 +32,19 @@ public class SetEmployeeUtil {
 		
 		EmployeeForm employeeForm = new EmployeeForm(id, name, gender, birthday, deptId);
 		return employeeForm;
+	}
+	
+	private String formatDate(String dateTxt) {
+		if (!dateTxt.matches("^[0-9]{4}/[0-9]{1,2}/[0-9]{1,2}$")) {
+			return dateTxt;
+		}
+		String[] data = dateTxt.split("/");
+		String year = data[0];
+		String month = "0" + data[1];
+		month = month.substring(month.length() - 2);
+		String day = "0" + data[2];
+		day = day.substring(day.length() - 2);
+		return year + "/" + month + "/" + day;
 	}
 	
 	public String toHankaku(String str) {
