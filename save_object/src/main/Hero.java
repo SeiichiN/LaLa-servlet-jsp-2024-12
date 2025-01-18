@@ -13,8 +13,8 @@ public class Hero implements Serializable {
 	}
 	public void attack(Matango m) {
 		System.out.println(this.getName() + "は" + m.getSuffix() + "を攻撃した！");
-		m.setHp(m.getHp() - 5);
-		System.out.println(m.getSuffix() + "に５ポイントのダメージを与えた！");
+		m.setHp(m.getHp() - 7);
+		System.out.println(m.getSuffix() + "に7ポイントのダメージを与えた！");
 	}
 	public String getName() {
 		return name;
