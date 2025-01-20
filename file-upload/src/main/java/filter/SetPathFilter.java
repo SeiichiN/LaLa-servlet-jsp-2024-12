@@ -15,7 +15,7 @@ public class SetPathFilter extends HttpFilter {
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		String path = request.getServletPath();
 		if (path.equals("/")) {
-			response.sendRedirect("/main");
+			response.sendRedirect("main");
 			return;
 		}
 		
