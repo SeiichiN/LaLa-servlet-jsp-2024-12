@@ -29,9 +29,14 @@ public class MainServlet extends HttpServlet {
 		//name属性がpictのファイルをPartオブジェクトとして取得
 		Part part = request.getPart("pict");
 		//ファイル名を取得
-		String filename = part.getSubmittedFileName();//ie対応が不要な場合
-		// String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+		// for unix
+		String _filename = part.getSubmittedFileName();
+		System.out.println("_filename:" + _filename);
+		// この段階では _filename には "c:" がついている。(win)
+		// for win
+		String filename = Paths.get(_filename).getFileName().toString();
 		System.out.println("filename:" + filename);
+		// この段階で、 "C:" のない filename になる。
 		//アップロードするフォルダ
 		String path = getServletContext().getRealPath("/upload");
 		//実際にファイルが保存されるパス確認
